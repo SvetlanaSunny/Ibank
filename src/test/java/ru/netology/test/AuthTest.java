@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.data.DataGenerator.Registration.getRegisteredUser;
@@ -29,7 +28,7 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $(" [data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("[id=root]").should(text("Личный кабинет"));
+        $(".heading").should(text("Личный кабинет"));
     }
 
 
@@ -40,7 +39,7 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(notRegisteredUser.getLogin());
         $("[data-test-id=password] input").setValue(notRegisteredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $(".notification__content").should(text("Ошибка! Неверно указан логин или пароль"));
+        $(".notification__content").should(visible, text("Ошибка! Неверно указан логин или пароль"));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(blockedUser.getLogin());
         $("[data-test-id=password] input").setValue(blockedUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $("[data-test-id=error-notification]").should(text("Пользователь заблокирован"));
+        $("[data-test-id=error-notification]").should(visible, text("Пользователь заблокирован"));
     }
 
     @Test
@@ -61,7 +60,7 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(wrongLogin);
         $("[data-test-id=password] input").setValue(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
-        $(".notification__content").should(exactText("Ошибка! Неверно указан логин или пароль"));
+        $(".notification__content").should(visible, text("Ошибка! Неверно указан логин или пароль"));
     }
 
     @Test
@@ -72,7 +71,7 @@ public class AuthTest {
         $("[data-test-id=login] input").setValue(registeredUser.getLogin());
         $("[data-test-id=password] input").setValue(wrongPassword);
         $("[data-test-id=action-login]").click();
-        $(".notification__content").should(exactText("Ошибка! Неверно указан логин или пароль"));
+        $(".notification__content").should(visible, text("Ошибка! Неверно указан логин или пароль"));
     }
 
 
